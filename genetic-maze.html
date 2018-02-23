@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74713048-2"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-74713048-2');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+
+  <link rel="canonical" href="http://tfoucault.eu/"/>
+  <link rel="shortcut icon" href="favicon.ico" title="Favicon"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <meta charset="utf-8">
+  <title>Genetic Algorithm First Test</title>
+
+</head>
+<body onload="launch();">
+  <div id="main-container">
+    <div id="wrapper">
+      <section class="toolbar">
+        <a class="calltoaction ai-button" onclick="nextGen()"><i class="fa fa-step-forward fa-lg"></i></a>
+        <a class="calltoaction ai-button" onclick="play()"><i class="fa fa-play fa-lg"></i></a>
+        <a class="calltoaction ai-button" onclick="forward()"><i class="fa fa-forward fa-lg"></i></a>
+        <a class="calltoaction ai-button" onclick="stop()"><i class="fa fa-stop fa-lg"></i></a>
+      </section>
+      <section class="maze-list">
+        <div>
+          <p class="maze-title">Best (all time)</p>
+          <canvas id="maze0"></canvas>
+        </div>
+        <div>
+          <p class="maze-title">Worst (current generation)</p>
+          <canvas id="maze1"></canvas>
+        </div>
+        <div>
+          <p class="maze-title">Best (current generation)</p>
+          <canvas id="maze2"></canvas>
+        </div>
+        <div>
+          <p class="maze-title">Median (current generation)</p>
+          <canvas id="maze3"></canvas>
+        </div>
+      </section>
+      <section>
+      <canvas id="fitnessChart"></canvas>
+      </section>
+    </div>
+  </div>
+
+  <script src="genetic_alg.js"></script>
+  <script src="display.js"></script>
+  <script src="maze.js"></script>
+  <script src="population.js"></script>
+  <script src="node_modules/chart.js/dist/Chart.js"></script>
+  <script src="mazeChart.js"></script>
+  <script src="graphAlg.js"></script>
+</body>
+</html>
