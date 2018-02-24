@@ -3,7 +3,7 @@
 * @Date:   2017-12-04T21:36:01+01:00
 * @Filename: genetic_alg.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-02-24T12:26:00+01:00
+ * @Last modified time: 2018-02-24T13:04:55+01:00
 */
 
 const FIT_COEF = 10;
@@ -13,16 +13,14 @@ var resolution;
 var mazeSize;
 var mutationRate;
 var population;
-var mazeCanvasList = [];
+var mazeCanvasList;
 var fitnessChart;
-var populations = [];
+var populations;
 var fittestOfAllTime;
-var maxFit = 0;
+var maxFit;
+var continueUpdatingStatus;
 
-var continueUpdatingStatus = true;
-
-//var genFrequence = 50;
-var interval = 0;
+var interval;
 
 var Crossover = {
   SINGLE_POINT: 1,
@@ -30,11 +28,17 @@ var Crossover = {
 }
 
 launch = function(){
+  //Init
   popSize = 50;
   resolution = 200;
   mazeSize = 15;
   mutationRate = 0.001;
   crossoverRate = 1;
+
+  maxFit = 0;
+  mazeCanvasList = [];
+  populations = [];
+  continueUpdatingStatus = true;
 
   for(var i = 0; i < 4; i++) {
     mazeCanvasList[i] = new MazeCanvas("maze" + i, resolution, mazeSize);
@@ -92,4 +96,8 @@ forward = function() {
 
 stop = function() {
   clearInterval(interval);
+}
+
+restart = function() {
+  launch();
 }
