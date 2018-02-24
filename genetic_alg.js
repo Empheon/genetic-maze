@@ -3,10 +3,10 @@
 * @Date:   2017-12-04T21:36:01+01:00
 * @Filename: genetic_alg.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-02-24T11:37:57+01:00
+ * @Last modified time: 2018-02-24T12:26:00+01:00
 */
 
-
+const FIT_COEF = 10;
 
 var popSize;
 var resolution;
@@ -19,7 +19,8 @@ var populations = [];
 var fittestOfAllTime;
 var maxFit = 0;
 
-var autoGen = false;
+var continueUpdatingStatus = true;
+
 //var genFrequence = 50;
 var interval = 0;
 
@@ -42,6 +43,7 @@ launch = function(){
   fitnessChart = new MazeChart("fitnessChart", "Average Fitness");
   population = new Population(mazeSize, mutationRate, crossoverRate, popSize);
   //population.crossoverMethod = Crossover.SINGLE_POINT;
+  updateMazeStatus();
 }
 
 nextGen = function() {
@@ -59,11 +61,23 @@ nextGen = function() {
   mazeCanvasList[1].drawMaze(population.worstMaze.maze);
   mazeCanvasList[2].drawMaze(population.fittestMaze.maze);
   mazeCanvasList[3].drawMaze(population.pop[popSize/2].maze);
+
+  if(continueUpdatingStatus){
+    var stage = Math.floor(getBaseLog(FIT_COEF, population.averageFitness))
+    updateMazeStatus(stage, population.generationCounter);
+    if(stage == 4) {
+      continueUpdatingStatus = false;
+      stop();
+    }
+  }
+}
+
+getBaseLog = function(x, y) {
+    return Math.log(y) / Math.log(x);
 }
 
 automaticGen = function(genFrequence) {
   stop();
-  autoGen = true;
   nextGen();
   interval = setInterval(nextGen, genFrequence);
 }
@@ -77,6 +91,5 @@ forward = function() {
 }
 
 stop = function() {
-  autoGen = false;
   clearInterval(interval);
 }

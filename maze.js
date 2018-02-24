@@ -3,13 +3,8 @@
 * @Date:   2017-12-04T21:35:46+01:00
 * @Filename: maze.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-01-07T17:39:22+01:00
+ * @Last modified time: 2018-02-24T12:02:38+01:00
 */
-
-// function succTab(pair, succ){
-//   this.pair = pair;
-//   this.succ = succ;
-// }
 
 function Maze(mazeSize, crossoverMethod) {
   this.fitness = 0;
@@ -40,7 +35,6 @@ function Maze(mazeSize, crossoverMethod) {
   //How fit is the maze - Longest maze
   this.calcFitness = function() {
     this.fitness = 0;
-    const FIT_COEF = 10;
     var fitMultiplier = 1;
     //TODO: implement graph algorithm
 
