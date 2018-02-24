@@ -3,7 +3,7 @@
 * @Date:   2017-12-04T21:36:01+01:00
 * @Filename: genetic_alg.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-01-07T17:17:29+01:00
+ * @Last modified time: 2018-02-24T11:37:57+01:00
 */
 
 

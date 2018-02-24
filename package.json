@@ -1,0 +1,30 @@
+{
+  "name": "genetic_maze",
+  "version": "1.0.0",
+  "description": "A small project intending to generate mazes based on a genetic algorithm.",
+  "main": "genetic_alg.js",
+  "dependencies": {
+    "chart.js": "^2.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Empheon/genetic-maze.git"
+  },
+  "keywords": [
+    "genetic",
+    "algorithm",
+    "maze",
+    "artificial",
+    "intelligence"
+  ],
+  "author": "Thomas Foucault",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Empheon/genetic-maze/issues"
+  },
+  "homepage": "https://github.com/Empheon/genetic-maze#readme"
+}
