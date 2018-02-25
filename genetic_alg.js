@@ -3,7 +3,7 @@
 * @Date:   2017-12-04T21:36:01+01:00
 * @Filename: genetic_alg.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-02-24T13:04:55+01:00
+ * @Last modified time: 2018-02-25T19:55:05+01:00
 */
 
 const FIT_COEF = 10;
@@ -51,6 +51,7 @@ launch = function(){
 }
 
 nextGen = function() {
+  //var t0 = performance.now();
   population.generateNewPopulation();
   populations[population.generationCounter] = population; //Save the pops
 
@@ -67,13 +68,20 @@ nextGen = function() {
   mazeCanvasList[3].drawMaze(population.pop[popSize/2].maze);
 
   if(continueUpdatingStatus){
-    var stage = Math.floor(getBaseLog(FIT_COEF, population.averageFitness))
-    updateMazeStatus(stage, population.generationCounter);
-    if(stage == 4) {
+    var stage = getBaseLog(FIT_COEF, population.averageFitness);
+    if(stage < 8.0) {
+      stage = Math.floor(stage)
+    }
+
+    updateMazeStatus(stage);
+    if(stage > 8.45) {
       continueUpdatingStatus = false;
+      updateMazeStatus(-4, population.generationCounter);
       stop();
     }
   }
+  //var t1 = performance.now();
+  //console.log("New gen took " + (t1 - t0) + " milliseconds.")
 }
 
 getBaseLog = function(x, y) {
@@ -96,6 +104,11 @@ forward = function() {
 
 stop = function() {
   clearInterval(interval);
+}
+
+pause = function() {
+  if(continueUpdatingStatus) updateMazeStatus(-3);
+  stop();
 }
 
 restart = function() {

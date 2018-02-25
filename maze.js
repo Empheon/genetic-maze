@@ -3,7 +3,7 @@
 * @Date:   2017-12-04T21:35:46+01:00
 * @Filename: maze.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-02-24T12:02:38+01:00
+ * @Last modified time: 2018-02-25T19:31:28+01:00
 */
 
 function Maze(mazeSize, crossoverMethod) {
@@ -32,66 +32,47 @@ function Maze(mazeSize, crossoverMethod) {
     }
   }
 
-  //How fit is the maze - Longest maze
+  //How fit is the maze / how it matches a valid and complex maze
   this.calcFitness = function() {
     this.fitness = 0;
     var fitMultiplier = 1;
-    //TODO: implement graph algorithm
 
-    //Test with fitness = the more walls you have
-    // for(var i = 0; i < mazeSize; i++){
-    //   for(var j = 0; j < mazeSize; j++){
-    //     if(this.maze[i][j] === 1) {
-    //       this.fitness++;
-    //     }
-    //   }
-    // }
-    // this.fitness = this.fitness / (mazeSize * mazeSize);
-
-    var exit1 = [];
-    var exit2 = [];
+    var exits = [];
     var nbOfWantedExits = 2;
     var countExits = 0;
     for(var i = 0; i < mazeSize; i++){
       for(var j = 0; j < mazeSize; j++){
         //count how many exits the maze has
         if((i === 0 || i === mazeSize - 1 || j === 0 || j === mazeSize - 1) && this.maze[i][j] === 0){
-          countExits++;
-          if(countExits === 1){
-            exit1 = [i, j];
-          } else if(countExits === 2){
-            exit2 = [i, j];
+          if(countExits < nbOfWantedExits){
+            exits[countExits] = i + "," + j;
           }
+          countExits++;
         }
       }
     }
     //this.fitness = countExits / (mazeSize * 4 - 4)
 
-    if(countExits !== nbOfWantedExits ) {
+    if(countExits !== nbOfWantedExits) {
       this.fitness = 1/Math.abs(nbOfWantedExits - countExits);
     } else {
       this.fitness = fitMultiplier * FIT_COEF;
       fitMultiplier *= FIT_COEF * FIT_COEF;
-      //this.fitness = 10;
-      //Then we search if path is possible
-      //this.convertToSuccTable();
+
       //Count connex component ammount
 
-      //this.fitness = 2 + 1/Math.abs(this.succTable.length - (4 * 2 + ((mazeSize - 1) * 4 - 4) * 3 + ((mazeSize - 2) * (mazeSize - 2)) * 4));
-      //this.fitness = Math.pow(this.succTable.length/ (4 * 2 + ((mazeSize - 1) * 4 - 4) * 3 + ((mazeSize - 2) * (mazeSize - 2)) * 4), 4) * 2;
-      //Then we search how good is the path
       var graph = new Graph(this.maze);
       var CFCNb = countCFC(graph);
       var CFCquotient = Math.abs(Math.pow(mazeSize * mazeSize, 2) - CFCNb);
-      // console.log(CFCNb + " " + CFCquotient);
+
       if(CFCNb !== 1){
-        // console.log((1/CFCNb) + " " + ((1/CFCNb) * fitMultiplier));
-        this.fitness += (1/CFCNb) * fitMultiplier;
+        this.fitness += (1 / CFCNb) * fitMultiplier;
       } else {
         this.fitness = fitMultiplier * FIT_COEF;
         fitMultiplier *= FIT_COEF * FIT_COEF;
-        longestPath(graph, exit1, exit2);
-        var wallCount = 0;
+
+
+        /*var wallCount = 0;
         for(var i = 1; i < mazeSize - 1; i++){
           for(var j = 1; j < mazeSize - 1; j++){
             if(this.maze[i][j] === 1) {
@@ -102,22 +83,17 @@ function Maze(mazeSize, crossoverMethod) {
 
         if(wallCount !== ((mazeSize-1) * (mazeSize-1)) / 2) {
           this.fitness += (1/Math.abs(wallCount - ((mazeSize-2) * (mazeSize-2)) / 2)) * fitMultiplier;
+        }*/
+
+        var distBetweenExits = shortestPath(graph, exits[0], exits[1]).length;
+        if(distBetweenExits !== ((mazeSize-1) * (mazeSize-1)) / 2) {
+          this.fitness += Math.pow(distBetweenExits * fitMultiplier, 1.5);
         } else {
         this.fitness = fitMultiplier * FIT_COEF;
         fitMultiplier *= FIT_COEF * FIT_COEF;
         }
-        // this.fitness = Math.pow(this.fitness, 2);
       }
     }
-
-
-
-    //this.fitness = this.fitness / (mazeSize * mazeSize);
-    //this.fitness = Math.pow(this.fitness, 3);
-    // if(this.fitness >= 1) {
-    //   this.fitness = 0.9999;
-    //   return;
-    // }
   }
 
 

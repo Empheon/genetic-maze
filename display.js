@@ -3,7 +3,7 @@
  * @Date:   2017-12-04T21:36:01+01:00
  * @Filename: display.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-02-24T12:23:07+01:00
+ * @Last modified time: 2018-02-25T19:56:44+01:00
  */
 function MazeCanvas(id, resolution, arrayLength) {
   this.ctx = document.getElementById(id).getContext("2d");
@@ -31,9 +31,18 @@ function MazeCanvas(id, resolution, arrayLength) {
   }
 }
 
-function updateMazeStatus(stage = -100, nbGen) {
+function updateMazeStatus(stage = -5, nbGen) {
   var str = "";
   switch(stage) {
+    case -5:
+      str = "Generation not started";
+      break;
+    case -4:
+      str = "Maze generated in " + nbGen + ' generations<br/>Press <a onclick="play()"><i class="fa fa-play fa-lg"></i></a> or <a onclick="forward()"><i class="fa fa-forward fa-lg"></i></a> to continue generating';
+      break;
+    case -3:
+      str = "Generation paused";
+      break;
     case -2:
     case -1:
     case 0:
@@ -42,18 +51,8 @@ function updateMazeStatus(stage = -100, nbGen) {
     case 1:
       str = "Connecting all paths";
       break;
-    case 2:
-    case 3:
-      str = "Adding complexity";
-      break;
-    case 4:
-      str = "Maze generated in " + nbGen + " generations";
-      break;
-    case 10:
-      str = "Generation paused";
-      break;
     default:
-      str = "Generation not started";
+      str = "Adding complexity";
       break;
   }
   document.getElementById("maze-status").innerHTML = str;

@@ -3,7 +3,7 @@
 * @Date:   2017-12-15T13:14:29+01:00
 * @Filename: graphAlg.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-01-07T17:49:01+01:00
+ * @Last modified time: 2018-02-24T15:16:34+01:00
 */
 
 function Graph(maze){
@@ -45,6 +45,23 @@ function Graph(maze){
   // console.log(this.vertexes);
   // console.log("e");
   // console.log(this.edges);
+
+
+  var map = [];
+  var subMap;
+  for(v in this.vertexes) {
+    subMap = [];
+    for(u in this.edges[v]) {
+      subMap[this.edges[v][u]] = 1;
+    }
+    map[v] = subMap;
+  }
+
+  this.dijkstraGraph = new DijkstraGraph(map);
+}
+
+function shortestPath(graph, v1, v2) {
+  return graph.dijkstraGraph.findShortestPath(v1, v2);
 }
 
 var clock = 1;
@@ -103,7 +120,7 @@ function longestPath(graph, v1, v2) {
 }
 
 function exploreLongestP(graph, v1, v2, dist) {
-  //console.log("longest " + v1 + " " + v2);
+  //console.log("longest " + v1 + " " + v2 + " dist " + dist);
   visited[v1] = true;
   if(v1[0] === v2[0] && v1[1] === v2[1]) {
     console.log("Path found! " + dist + " " + longDist);
@@ -113,9 +130,11 @@ function exploreLongestP(graph, v1, v2, dist) {
   }
   //previsit(v);
   for(u in graph.edges[v1]) {
-    // console.log("EDGE FROM VERTEX " + v);
-    // console.log(graph.edges[v]);
-    // console.log(graph.edges[v][u]);
+    //console.log("-----------");
+    //   console.log("EDGE FROM VERTEX " + v1);
+     //console.log(graph.edges[v1]);
+    // console.log(graph.edges[v1][u]);
+    // console.log("***************");
     // console.log("visited ? " + visited[graph.edges[v][u]]);
     if(!visited[graph.edges[v1][u]]) {
       exploreLongestP(graph, graph.edges[v1][u], v2, dist++);
