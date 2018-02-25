@@ -3,7 +3,7 @@
 * @Date:   2017-12-04T21:36:01+01:00
 * @Filename: genetic_alg.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2018-02-25T19:55:05+01:00
+ * @Last modified time: 2018-02-25T21:03:27+01:00
 */
 
 const FIT_COEF = 10;
@@ -112,5 +112,6 @@ pause = function() {
 }
 
 restart = function() {
+  fitnessChart.destroy();
   launch();
 }

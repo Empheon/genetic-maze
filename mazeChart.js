@@ -3,7 +3,7 @@
  * @Date:   2017-12-04T21:35:46+01:00
  * @Filename: mazeChart.js
  * @Last modified by:   Thomas Foucault
- * @Last modified time: 2017-12-15T00:19:50+01:00
+ * @Last modified time: 2018-02-25T20:59:25+01:00
  */
 function MazeChart(id, label){
   this.dataSum = 0;
@@ -34,6 +34,10 @@ function MazeChart(id, label){
     //   this.dataSum = 0;
     // }
     this.barChart.update();
+  }
+
+  this.destroy = function() {
+    this.barChart.destroy();
   }
 
 }
